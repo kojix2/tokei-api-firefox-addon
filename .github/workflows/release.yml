@@ -1,0 +1,40 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*' # vで始まるタグ（例：v1.0.0）がプッシュされたときに実行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install web-ext
+        run: npm install -g web-ext
+
+      - name: Build extension
+        run: web-ext build -s . -a ./dist --overwrite-dest
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+          files: |
+            ./dist/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
