@@ -45,6 +45,19 @@ A Firefox extension that allows you to easily open the corresponding [Tokei API]
 
 There are no special build steps. Just edit the files and reload the extension.
 
+### Releasing
+
+This project uses GitHub Actions to automatically create releases when a new tag is pushed. To create a new release:
+
+1. Update the version number in `manifest.json`
+2. Commit your changes
+3. Create and push a new tag:
+   ```bash
+   git tag v1.0.0  # Replace with your version
+   git push origin v1.0.0
+   ```
+4. GitHub Actions will automatically build the extension and create a release with the ZIP file attached
+
 ## License
 
 MIT
