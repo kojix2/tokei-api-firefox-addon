@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Create ZIP file
+        run: |
+          zip -r tokei-api-opener.zip . -x "*.git*" -x "*.github*"
+      
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: tokei-api-opener.zip
+          generate_release_notes: true
