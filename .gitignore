@@ -1,0 +1,14 @@
+# Firefox extension temporary files
+*.xpi
+*.zip
+
+# Editor temporary files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS-specific files
+.DS_Store
+Thumbs.db
